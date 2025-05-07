@@ -19,11 +19,10 @@
     <Sidebar v-if="!isAuthRoute" />
 
     <!-- Contenido principal -->
-    <div class="flex-1 flex flex-col" :class="{ 'overflow-y-auto': !isAuthRoute }">
+    <div class="flex-1 h-screen overflow-hidden">
       <div
         v-if="!isAuthRoute"
-        class="p-6 lg:p-6 flex-1"
-        :class="{ 'pl-16 lg:pl-6': !isAuthRoute }"
+        class="h-full overflow-y-auto"
       >
         <router-view @open-modal="showModal = true" />
       </div>

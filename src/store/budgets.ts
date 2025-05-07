@@ -41,11 +41,11 @@ export const useBudgetStore = defineStore('budgets', {
         }
         
         console.log('Loading budgets for user:', userStore.user.id);
+        // Remove the month filter to load all budgets for the user
         const { data, error } = await supabase
           .from('budgets')
           .select('*')
-          .eq('user_id', userStore.user.id)
-          .eq('month', this.currentMonth);
+          .eq('user_id', userStore.user.id);
           
         if (error) {
           console.error('Supabase error loading budgets:', error);
@@ -169,30 +169,45 @@ export const useBudgetStore = defineStore('budgets', {
       }
     },
 
-    async removeBudget(id: string) {
+    async removeBudget(category: string) {
       const userStore = useUserStore();
+      const budget = this.budgets.find(b => b.category === category);
+      
+      if (!budget) {
+        console.error('Budget not found:', category);
+        return;
+      }
       
       // If in guest mode, remove from localStorage
       if (userStore.isGuestMode) {
-        this.budgets = this.budgets.filter(b => b.id !== id);
+        this.budgets = this.budgets.filter(b => b.category !== category);
         this.saveToLocalStorage();
         return;
       }
       
       // Otherwise remove from Supabase
       try {
-        if (!userStore.user?.id) return;
+        if (!userStore.user?.id || !budget.id) {
+          console.error('Cannot remove budget: Missing user ID or budget ID');
+          return;
+        }
+        
+        console.log('Removing budget from Supabase:', budget.id);
         
         const { error } = await supabase
           .from('budgets')
           .delete()
-          .eq('id', id)
+          .eq('id', budget.id)
           .eq('user_id', userStore.user.id);
           
-        if (error) throw error;
+        if (error) {
+          console.error('Supabase error removing budget:', error);
+          throw error;
+        }
         
         // Update local state
-        this.budgets = this.budgets.filter(b => b.id !== id);
+        this.budgets = this.budgets.filter(b => b.id !== budget.id);
+        console.log('Budget successfully removed');
       } catch (error) {
         console.error('Error removing budget from Supabase:', error);
       }
@@ -211,17 +226,13 @@ export const useBudgetStore = defineStore('budgets', {
     },
 
     async checkMonthlyReset() {
-      const userStore = useUserStore();
       const newMonth = new Date().toISOString().substring(0, 7);
       
       // If month has changed, update current month
       if (this.currentMonth !== newMonth) {
+        console.log(`Month changed from ${this.currentMonth} to ${newMonth}`);
         this.currentMonth = newMonth;
-        
-        // If not in guest mode, load budgets for the new month
-        if (!userStore.isGuestMode && userStore.user?.id) {
-          await this.loadBudgets();
-        }
+        await this.loadBudgets();
       }
     }
   }
