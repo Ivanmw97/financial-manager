@@ -55,7 +55,7 @@
         </svg>
         <div class="flex-1">
           <p class="text-sm font-medium">Financial Manager</p>
-          <p class="text-xs text-gray-400 version">v1.2.0</p>
+          <div class="version text-xs text-gray-500 mt-2">v1.2.1</div>
         </div>
       </div>
     </div>
