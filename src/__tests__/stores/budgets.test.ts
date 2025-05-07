@@ -126,8 +126,8 @@ describe('Budget Store', () => {
     expect(store.budgets.length).toBeGreaterThan(0)
     const addedBudget = store.budgets[0]
     
-    // Now remove it using the ID
-    await store.removeBudget(addedBudget.id as string)
+    // Now remove it using the category instead of ID
+    await store.removeBudget(addedBudget.category)
     expect(store.budgets).toHaveLength(0)
   })
 
