@@ -18,6 +18,9 @@
     "@types/chart.js": "^2.9.41",
     "chart.js": "^4.4.7",
     "esbuild": "^0.25.2",
+    "form-data": "^4.0.5",
+    "glob": "^10.5.0",
+    "js-yaml": "^4.1.1",
     "lucide-vue-next": "^0.474.0",
     "pinia": "^2.3.1",
     "pinia-plugin-persistedstate": "^4.2.0",
@@ -45,8 +48,8 @@
     "postcss": "^8.5.1",
     "tailwindcss": "^3.3.3",
     "typescript": "~5.6.2",
-    "vite": "^6.3.1",
-    "vitest": "^3.1.1",
+    "vite": "^6.4.1",
+    "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.1.1",
     "vue-tsc": "^2.2.0"
   }
