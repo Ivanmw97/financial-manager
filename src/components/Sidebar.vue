@@ -67,7 +67,7 @@ import SidebarItem from '../components/SidebarItem.vue';
 import { LayoutDashboard, Wallet, BarChart, ReceiptEuro, UserCircle } from 'lucide-vue-next';
 import UserProfile from './UserProfile.vue';
 
-const props = defineProps<{ isOpen: boolean }>();
+defineProps<{ isOpen: boolean }>();
 const emit = defineEmits<{ (e: 'close'): void }>();
 
 provide('closeSidebar', () => emit('close'));
