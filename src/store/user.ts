@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
 import { getActivePinia } from 'pinia';
+import { useTransactionStore } from './transactions';
+import { useBudgetStore } from './budgets';
 
 interface UserSignUpData {
   email: string;
@@ -63,14 +65,11 @@ export const useUserStore = defineStore('user', {
           // Get store IDs from state
           const storeIds = Object.keys(pinia.state.value);
           
-          // Import stores dynamically to reset them
           if (storeIds.includes('transactions')) {
-            const { useTransactionStore } = await import('./transactions');
             useTransactionStore().$reset();
           }
           
           if (storeIds.includes('budgets')) {
-            const { useBudgetStore } = await import('./budgets');
             useBudgetStore().$reset();
           }
         }
@@ -187,14 +186,11 @@ export const useUserStore = defineStore('user', {
           // Get store IDs from state
           const storeIds = Object.keys(pinia.state.value);
           
-          // Import stores dynamically to reset them
           if (storeIds.includes('transactions')) {
-            const { useTransactionStore } = await import('./transactions');
             useTransactionStore().$reset();
           }
           
           if (storeIds.includes('budgets')) {
-            const { useBudgetStore } = await import('./budgets');
             useBudgetStore().$reset();
           }
         }
