@@ -68,6 +68,12 @@ const router = createRouter({
       component: Budgets,
       meta: { requiresAuth: true }
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/Profile.vue'),
+      meta: { requiresAuth: true }
+    },
     // Catch-all route
     {
       path: '/:pathMatch(.*)*',

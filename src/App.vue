@@ -66,6 +66,7 @@ const routeTitle = computed(() => {
     '/transactions': 'Transactions',
     '/budgets': 'Budgets',
     '/stats': 'Stats',
+    '/profile': 'Profile',
   };
   return names[route.path] ?? '';
 });

@@ -16,18 +16,18 @@
           <span class="text-xs text-gray-400 mt-1 sm:mt-0">Updates in real-time</span>
         </div>
         <div class="flex items-baseline gap-2">
-          <span class="text-2xl font-bold">{{ todaySpent.toFixed(2) }} €</span>
+          <span class="text-2xl font-bold">{{ formatCurrency(todaySpent) }}</span>
           <span v-if="spentDifference !== 0" 
                 class="text-sm" 
                 :class="spentDifference > 0 ? 'text-red-500' : 'text-green-500'">
-            {{ spentDifference > 0 ? '↑' : '↓' }} {{ Math.abs(spentDifference).toFixed(2) }} €
+            {{ spentDifference > 0 ? '↑' : '↓' }} {{ formatCurrency(Math.abs(spentDifference)) }}
           </span>
         </div>
         <p class="text-xs text-gray-500 mt-2">Activity on {{ formatDate(new Date()) }}</p>
         <p v-if="spentDifference !== 0" 
            class="text-xs" 
            :class="spentDifference > 0 ? 'text-red-500' : 'text-green-500'">
-          That's {{ Math.abs(spentDifference).toFixed(2) }} € {{ spentDifference > 0 ? 'more' : 'less' }} than yesterday
+          That's {{ formatCurrency(Math.abs(spentDifference)) }} {{ spentDifference > 0 ? 'more' : 'less' }} than yesterday
         </p>
       </div>
 
@@ -38,7 +38,7 @@
           <span class="text-xs text-gray-400">Current month only</span>
         </div>
         <div class="flex items-baseline gap-2">
-          <span class="text-2xl font-bold">{{ monthlySpent.toFixed(2) }} €</span>
+          <span class="text-2xl font-bold">{{ formatCurrency(monthlySpent) }}</span>
         </div>
         <p class="text-xs text-gray-500 mt-2">Activity for {{ formatMonth(new Date()) }}</p>
         <p v-if="totalBudget > 0" class="text-xs text-gray-600">
@@ -56,7 +56,7 @@
           <span class="text-xs text-gray-400">Resets monthly</span>
         </div>
         <div class="flex items-baseline gap-2">
-          <span class="text-2xl font-bold">{{ (totalBudget - monthlySpent).toFixed(2) }} €</span>
+          <span class="text-2xl font-bold">{{ formatCurrency(totalBudget - monthlySpent) }}</span>
         </div>
         <p class="text-xs text-gray-500 mt-2">For {{ formatMonth(new Date()) }}</p>
         <p v-if="totalBudget > 0" class="text-xs" :class="totalBudget - monthlySpent > 0 ? 'text-green-500' : 'text-red-500'">
@@ -83,7 +83,7 @@
              class="space-y-2">
           <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <span class="font-medium text-sm lg:text-base">{{ budget.category }}</span>
-            <span class="text-xs lg:text-sm">{{ budget.spent.toFixed(2) }} € / {{ budget.budget_limit.toFixed(2) }} €</span>
+            <span class="text-xs lg:text-sm">{{ formatCurrency(budget.spent) }} / {{ formatCurrency(budget.budget_limit) }}</span>
           </div>
           <div class="w-full bg-gray-100 rounded-full h-2">
             <div class="h-2 rounded-full transition-all duration-300"
@@ -144,7 +144,10 @@
 import { computed, ref } from 'vue';
 import { useTransactionStore } from '../store/transactions';
 import { useBudgetStore } from '../store/budgets';
+import { useCurrency } from '../composables/useCurrency';
 import { storeToRefs } from 'pinia';
+
+const { format: formatCurrency } = useCurrency();
 
 const transactionStore = useTransactionStore();
 const budgetStore = useBudgetStore();

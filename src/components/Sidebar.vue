@@ -36,6 +36,7 @@
       <SidebarItem :icon="ReceiptEuro" label="Transactions" to="/transactions" />
       <SidebarItem :icon="Wallet" label="Budgets" to="/budgets" />
       <SidebarItem :icon="BarChart" label="Stats" to="/stats" />
+      <SidebarItem :icon="UserCircle" label="Profile" to="/profile" />
     </nav>
 
     <!-- Footer with UserProfile -->
@@ -63,7 +64,7 @@
 <script setup lang="ts">
 import { provide } from 'vue';
 import SidebarItem from '../components/SidebarItem.vue';
-import { LayoutDashboard, Wallet, BarChart, ReceiptEuro } from 'lucide-vue-next';
+import { LayoutDashboard, Wallet, BarChart, ReceiptEuro, UserCircle } from 'lucide-vue-next';
 import UserProfile from './UserProfile.vue';
 
 const props = defineProps<{ isOpen: boolean }>();
