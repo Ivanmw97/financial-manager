@@ -338,10 +338,14 @@ const handleSocialSignIn = async (provider: 'google') => {
     loading.value = true;
     errorMsg.value = '';
 
+    const redirectTo = window.location.hostname === 'localhost'
+      ? `${window.location.origin}/financial-manager/auth`
+      : 'https://ivanmw97.github.io/financial-manager/auth';
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: 'https://dmrtbyrtvemnohwhlvnr.supabase.co/auth/v1/callback'
+        redirectTo
       }
     });
     
