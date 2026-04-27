@@ -14,16 +14,10 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24'
         cache: 'npm'
-        registry-url: 'https://registry.npmjs.org'
     - name: Install dependencies
-      run: |
-        npm config set registry https://registry.npmjs.org/
-        npm config set strict-ssl false
-        npm ci --no-optional
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm ci
     - name: Type check
       run: npx vue-tsc --noEmit
     - name: Lint
@@ -37,22 +31,14 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24'
         cache: 'npm'
-        registry-url: 'https://registry.npmjs.org'
     - name: Install dependencies
-      run: |
-        npm config set registry https://registry.npmjs.org/
-        npm config set strict-ssl false
-        rm -rf node_modules package-lock.json
-        npm install
-        npm install @rollup/rollup-linux-x64-gnu @vitest/coverage-v8
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm ci
     - name: Run tests with coverage
       run: npm run test:coverage
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
 
   build:
     needs: test
@@ -62,20 +48,15 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24'
         cache: 'npm'
-        registry-url: 'https://registry.npmjs.org'
     - name: Install dependencies
-      run: |
-        npm config set registry https://registry.npmjs.org/
-        npm config set strict-ssl false
-        rm -rf node_modules package-lock.json
-        npm install
-        npm install @rollup/rollup-linux-x64-gnu
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm ci
     - name: Build
       run: npm run build
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
