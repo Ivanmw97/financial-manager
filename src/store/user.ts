@@ -132,6 +132,9 @@ export const useUserStore = defineStore('user', {
         if (error) throw error;
         
         if (data.user) {
+          this.user = data.user;
+          this.isGuestMode = false;
+
           // Create a profile for the new user
           const { error: profileError } = await supabase
             .from('profiles')

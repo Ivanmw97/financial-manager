@@ -288,7 +288,7 @@ Test files are under `src/__tests__/stores/` and `src/__tests__/components/`.
 | Area | Issue / Opportunity |
 |---|---|
 | `Stats.vue` | "Daily Spending Trend" chart is a placeholder (random bar heights, not real data) |
-| `categories` table | Defined in DB schema but not wired to the UI — categories are free text strings |
+| `categories` table | Table exists in Supabase but not wired to the UI — categories are currently free text strings in `Transaction` and `Budget`. Intended for a future feature letting users define custom categories with color and icon. |
 | `profiles` table | Created on sign-up, read in `UserProfile.vue`, but `currency` and `theme` preferences are not applied to the UI |
 | Guest → Auth migration | Logging in from guest mode silently drops guest data instead of offering to import it |
 | Error handling | No global error boundary; Supabase failures surface only via `console.error` |
