@@ -3,7 +3,7 @@
     <!-- Header and Filters -->
     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 lg:mb-8 gap-4">
       <div>
-        <h1 class="text-xl lg:text-2xl font-bold">Transactions</h1>
+        <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Transactions</h1>
         <p class="text-sm text-gray-500">Manage your income and expenses</p>
       </div>
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -59,7 +59,7 @@
               </td>
               <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-right" 
                   :class="transaction.type === 'expense' ? 'text-red-600' : 'text-green-600'">
-                {{ transaction.type === 'expense' ? '-' : '+' }}{{ transaction.amount.toFixed(2) }} €
+                {{ transaction.type === 'expense' ? '-' : '+' }}{{ formatCurrency(transaction.amount) }}
               </td>
               <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-right text-xs lg:text-sm font-medium">
                 <button class="text-gray-500 hover:text-blue-600 mr-3" 
@@ -94,7 +94,7 @@
             </div>
             <p :class="transaction.type === 'expense' ? 'text-red-600' : 'text-green-600'"
                class="font-medium">
-              {{ transaction.type === 'expense' ? '-' : '+' }}{{ transaction.amount.toFixed(2) }} €
+              {{ transaction.type === 'expense' ? '-' : '+' }}{{ formatCurrency(transaction.amount) }}
             </p>
           </div>
           <div class="flex justify-between items-center">
@@ -222,8 +222,12 @@
 import { ref, computed } from 'vue';
 import { useTransactionStore } from '../store/transactions';
 import { useBudgetStore } from '../store/budgets';
+import { useCurrency } from '../composables/useCurrency';
+
 import { storeToRefs } from 'pinia';
 import type { Transaction, TransactionType } from '../types/Transaction';
+
+const { format: formatCurrency } = useCurrency();
 
 const transactionStore = useTransactionStore();
 const budgetStore = useBudgetStore();

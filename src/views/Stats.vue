@@ -2,7 +2,7 @@
   <div class="p-4 lg:p-6">
     <!-- Header -->
     <div class="mb-6 lg:mb-8">
-      <h1 class="text-xl lg:text-2xl font-bold">Statistics</h1>
+      <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Statistics</h1>
       <p class="text-sm text-gray-500">Financial insights and analysis</p>
     </div>
 
@@ -28,16 +28,16 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
       <div class="bg-white p-4 lg:p-6 rounded-lg shadow-sm">
         <h3 class="text-xs lg:text-sm text-gray-500 mb-2">Total Income</h3>
-        <p class="text-xl lg:text-2xl font-bold text-green-600">{{ totalIncome.toFixed(2) }} €</p>
+        <p class="text-xl lg:text-2xl font-bold text-green-600">{{ formatCurrency(totalIncome) }}</p>
       </div>
       <div class="bg-white p-4 lg:p-6 rounded-lg shadow-sm">
         <h3 class="text-xs lg:text-sm text-gray-500 mb-2">Total Expenses</h3>
-        <p class="text-xl lg:text-2xl font-bold text-red-600">{{ totalExpenses.toFixed(2) }} €</p>
+        <p class="text-xl lg:text-2xl font-bold text-red-600">{{ formatCurrency(totalExpenses) }}</p>
       </div>
       <div class="bg-white p-4 lg:p-6 rounded-lg shadow-sm">
         <h3 class="text-xs lg:text-sm text-gray-500 mb-2">Net Savings</h3>
         <p class="text-xl lg:text-2xl font-bold" :class="netSavings >= 0 ? 'text-green-600' : 'text-red-600'">
-          {{ netSavings.toFixed(2) }} €
+          {{ formatCurrency(netSavings) }}
         </p>
       </div>
       <div class="bg-white p-4 lg:p-6 rounded-lg shadow-sm">
@@ -95,6 +95,9 @@
 import { ref, computed } from 'vue';
 import { useTransactionStore } from '../store/transactions';
 import { storeToRefs } from 'pinia';
+import { useCurrency } from '../composables/useCurrency';
+
+const { format: formatCurrency } = useCurrency();
 
 const transactionStore = useTransactionStore();
 const { transactions } = storeToRefs(transactionStore);

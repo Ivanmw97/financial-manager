@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { supabase } from '../lib/supabaseClient';
 import type { User } from '@supabase/supabase-js';
 import { getActivePinia } from 'pinia';
+import { useTransactionStore } from './transactions';
+import { useBudgetStore } from './budgets';
 
 interface UserSignUpData {
   email: string;
@@ -63,14 +65,11 @@ export const useUserStore = defineStore('user', {
           // Get store IDs from state
           const storeIds = Object.keys(pinia.state.value);
           
-          // Import stores dynamically to reset them
           if (storeIds.includes('transactions')) {
-            const { useTransactionStore } = await import('./transactions');
             useTransactionStore().$reset();
           }
           
           if (storeIds.includes('budgets')) {
-            const { useBudgetStore } = await import('./budgets');
             useBudgetStore().$reset();
           }
         }
@@ -81,14 +80,13 @@ export const useUserStore = defineStore('user', {
       console.log('Guest mode set to:', value);
     },
     
-    async signIn(email: string, password: string, sessionOptions = {}) {
+    async signIn(email: string, password: string) {
       this.isLoading = true;
       
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
-          password,
-          options: sessionOptions
+          password
         });
         
         if (error) throw error;
@@ -133,6 +131,9 @@ export const useUserStore = defineStore('user', {
         if (error) throw error;
         
         if (data.user) {
+          this.user = data.user;
+          this.isGuestMode = false;
+
           // Create a profile for the new user
           const { error: profileError } = await supabase
             .from('profiles')
@@ -187,14 +188,11 @@ export const useUserStore = defineStore('user', {
           // Get store IDs from state
           const storeIds = Object.keys(pinia.state.value);
           
-          // Import stores dynamically to reset them
           if (storeIds.includes('transactions')) {
-            const { useTransactionStore } = await import('./transactions');
             useTransactionStore().$reset();
           }
           
           if (storeIds.includes('budgets')) {
-            const { useBudgetStore } = await import('./budgets');
             useBudgetStore().$reset();
           }
         }

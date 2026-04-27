@@ -1,12 +1,10 @@
 <template>
-  <!-- Mobile Menu Button -->
-  <button 
-    class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-    @click="toggleSidebar"
-  >
-    <Menu v-if="!isOpen" class="h-6 w-6" />
-    <X v-else class="h-6 w-6" />
-  </button>
+  <!-- Backdrop for mobile -->
+  <div
+    v-if="isOpen"
+    class="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
+    @click="$emit('close')"
+  ></div>
 
   <!-- Sidebar -->
   <div :class="[
@@ -16,28 +14,29 @@
     <!-- Logo -->
     <div class="p-6 border-b border-gray-800">
       <div class="flex items-center gap-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-500 h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
           <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
           <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
         </svg>
         <div>
-          <span class="text-blue-500 font-bold text-xl">Financial</span>
-          <span class="text-white font-medium text-xl">Manager</span>
+          <span class="text-xl font-bold text-blue-500">Financial</span>
+          <span class="text-xl font-medium text-white">Manager</span>
         </div>
       </div>
     </div>
 
     <!-- Menu -->
-    <nav class="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
+    <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
       <div class="flex items-center gap-2 px-2 mb-4">
-        <div class="h-px bg-gray-800 flex-grow"></div>
-        <p class="text-gray-400 text-xs font-medium">MENU</p>
-        <div class="h-px bg-gray-800 flex-grow"></div>
+        <div class="flex-grow h-px bg-gray-800"></div>
+        <p class="text-xs font-medium text-gray-400">MENU</p>
+        <div class="flex-grow h-px bg-gray-800"></div>
       </div>
       <SidebarItem :icon="LayoutDashboard" label="Dashboard" to="/dashboard" />
       <SidebarItem :icon="ReceiptEuro" label="Transactions" to="/transactions" />
       <SidebarItem :icon="Wallet" label="Budgets" to="/budgets" />
       <SidebarItem :icon="BarChart" label="Stats" to="/stats" />
+      <SidebarItem :icon="UserCircle" label="Profile" to="/profile" />
     </nav>
 
     <!-- Footer with UserProfile -->
@@ -48,14 +47,14 @@
       </div>
       
       <!-- App Info -->
-      <div class="px-6 py-3 flex items-center gap-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+      <div class="flex items-center gap-3 px-6 py-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
           <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
           <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
         </svg>
         <div class="flex-1">
           <p class="text-sm font-medium">Financial Manager</p>
-          <div class="version text-xs text-gray-500 mt-2">v1.2.1</div>
+          <div class="mt-2 text-xs text-gray-500 version">v1.4.0</div>
         </div>
       </div>
     </div>
@@ -63,20 +62,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { provide } from 'vue';
 import SidebarItem from '../components/SidebarItem.vue';
-import { Menu, X, LayoutDashboard, Wallet, BarChart, ReceiptEuro } from 'lucide-vue-next';
+import { LayoutDashboard, Wallet, BarChart, ReceiptEuro, UserCircle } from 'lucide-vue-next';
 import UserProfile from './UserProfile.vue';
 
-const isOpen = ref(false);
+const props = defineProps<{ isOpen: boolean }>();
+const emit = defineEmits<{ (e: 'close'): void }>();
 
-const toggleSidebar = () => {
-  isOpen.value = !isOpen.value;
-};
-
-// Provide the close function to child components
-provide('closeSidebar', () => {
-  isOpen.value = false;
-});
+provide('closeSidebar', () => emit('close'));
 </script>
   

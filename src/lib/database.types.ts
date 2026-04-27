@@ -48,7 +48,7 @@ export interface Database {
           created_at: string
           user_id: string
           category: string
-          limit: number
+          budget_limit: number
           month: string
         }
         Insert: {
@@ -56,7 +56,7 @@ export interface Database {
           created_at?: string
           user_id: string
           category: string
-          limit: number
+          budget_limit: number
           month: string
         }
         Update: {
@@ -64,7 +64,7 @@ export interface Database {
           created_at?: string
           user_id?: string
           category?: string
-          limit?: number
+          budget_limit?: number
           month?: string
         }
       }

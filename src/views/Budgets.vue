@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 lg:mb-8 gap-4">
       <div>
-        <h1 class="text-xl lg:text-2xl font-bold">Budgets</h1>
+        <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Budgets</h1>
         <p class="text-sm text-gray-500">Monthly spending limits for {{ formattedMonth }}</p>
       </div>
       <button 
@@ -54,7 +54,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
             <span class="text-sm font-medium order-2 sm:order-1" 
                   :class="budget.spent > budget.budget_limit ? 'text-red-600' : 'text-gray-600'">
-                {{ budget.spent.toFixed(2) }} € / {{ budget.budget_limit.toFixed(2) }} €
+                {{ formatCurrency(budget.spent) }} / {{ formatCurrency(budget.budget_limit) }}
             </span>
             <div class="flex gap-2 order-1 sm:order-2">
               <button class="text-gray-500 hover:text-blue-600 p-1 rounded-full hover:bg-blue-50 transition-colors" 
@@ -88,8 +88,8 @@
           </span>
           <span :class="budget.budget_limit - budget.spent > 0 ? 'text-green-600' : 'text-red-600'">
             {{ budget.budget_limit - budget.spent > 0 
-              ? `${(budget.budget_limit - budget.spent).toFixed(2)} € available` 
-              : `${Math.abs(budget.budget_limit - budget.spent).toFixed(2)} € over budget`
+              ? `${formatCurrency(budget.budget_limit - budget.spent)} available` 
+              : `${formatCurrency(Math.abs(budget.budget_limit - budget.spent))} over budget`
             }}
           </span>
         </div>
@@ -104,7 +104,7 @@
           <p class="text-xs lg:text-sm text-gray-500">Monthly spending for {{ formattedMonth }}</p>
         </div>
         <span class="text-base lg:text-lg font-medium px-4 py-2 bg-gray-50 rounded-lg w-full sm:w-auto text-center">
-          {{ totalSpent.toFixed(2) }} € / {{ totalBudget.toFixed(2) }} €
+          {{ formatCurrency(totalSpent) }} / {{ formatCurrency(totalBudget) }}
         </span>
       </div>
       
@@ -123,8 +123,8 @@
           <span>{{ ((totalSpent / totalBudget) * 100).toFixed(1) }}% of total budget used</span>
           <span>
             {{ totalBudget - totalSpent > 0 
-              ? `${(totalBudget - totalSpent).toFixed(2)} € available` 
-              : `${Math.abs(totalBudget - totalSpent).toFixed(2)} € over total budget`
+              ? `${formatCurrency(totalBudget - totalSpent)} available` 
+              : `${formatCurrency(Math.abs(totalBudget - totalSpent))} over total budget`
             }}
           </span>
         </div>
@@ -194,10 +194,12 @@
 import { ref, computed } from 'vue';
 import { useTransactionStore } from '../store/transactions';
 import { useBudgetStore } from '../store/budgets';
+import { useCurrency } from '../composables/useCurrency';
 import { storeToRefs } from 'pinia';
 import type { Budget, BudgetWithSpent } from '../types/Budget';
-// Add onMounted to check monthly reset
 import { onMounted } from 'vue';
+
+const { format: formatCurrency } = useCurrency();
 
 onMounted(() => {
   budgetStore.checkMonthlyReset();  

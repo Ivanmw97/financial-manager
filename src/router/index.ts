@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { watch } from 'vue';
 import Dashboard from '../views/Dashboard.vue';
 import Transactions from '../views/Transactions.vue';
 import Stats from '../views/Stats.vue';
@@ -67,6 +68,12 @@ const router = createRouter({
       component: Budgets,
       meta: { requiresAuth: true }
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/Profile.vue'),
+      meta: { requiresAuth: true }
+    },
     // Catch-all route
     {
       path: '/:pathMatch(.*)*',
@@ -87,10 +94,20 @@ const router = createRouter({
 // Navigation guard
 router.beforeEach(async (to, _, next) => {
   const userStore = useUserStore();
-  
-  // Wait for user initialization if it's the first navigation
+
+  // If not yet initialized (first load), initialize once
   if (userStore.isLoading) {
-    await userStore.initialize();
+    await new Promise<void>((resolve) => {
+      const stop = watch(
+        () => userStore.isLoading,
+        (loading) => {
+          if (!loading) {
+            stop();
+            resolve();
+          }
+        }
+      );
+    });
   }
   
   const isAuthenticated = userStore.user !== null || userStore.isGuestMode;
