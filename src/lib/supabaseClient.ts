@@ -10,4 +10,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase credentials missing. Check your .env file.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const storage = localStorage.getItem('rememberMe') === 'false' ? sessionStorage : localStorage;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    storage,
+    persistSession: true,
+  }
+});

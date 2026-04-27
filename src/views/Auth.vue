@@ -1,34 +1,34 @@
 <template>
-  <div class="w-screen h-screen flex overflow-hidden">
+  <div class="flex w-screen h-screen overflow-hidden">
     <!-- Reset Password UI -->
-    <div v-if="$route.path.includes('reset-password')" class="w-full flex flex-col justify-center items-center bg-gray-900">
+    <div v-if="$route.path.includes('reset-password')" class="flex flex-col items-center justify-center w-full bg-gray-900">
       <router-view></router-view>
     </div>
     
     <!-- Main Auth UI with split panels -->
     <template v-else>
       <!-- Left side: Auth Form -->
-      <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(160deg, #0f172a 0%, #111827 60%, #0f172a 100%);">
+      <div class="flex flex-col justify-center w-full px-4 py-12 lg:w-1/2 sm:px-6 lg:px-8" style="background: linear-gradient(160deg, #0f172a 0%, #111827 60%, #0f172a 100%);">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
           <!-- Logo pequeño en mobile -->
           <div class="flex justify-center mb-6 lg:hidden">
             <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <div class="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
                   <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
                 </svg>
               </div>
-              <span class="text-white font-bold text-lg">Financial<span class="text-blue-400">Manager</span></span>
+              <span class="text-lg font-bold text-white">Financial<span class="text-blue-400">Manager</span></span>
             </div>
           </div>
-          <h2 class="text-center text-2xl font-bold text-white tracking-tight">
+          <h2 class="text-2xl font-bold tracking-tight text-center text-white">
             {{ mode === 'signin' ? 'Welcome back' : 'Create your account' }}
           </h2>
-          <p class="mt-2 text-center text-sm text-gray-500">
+          <p class="mt-2 text-sm text-center text-gray-500">
             {{ mode === 'signin' ? 'Don\'t have an account?' : 'Already have an account?' }}
             <a href="#"
-               class="ml-1 font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
+               class="ml-1 font-medium text-blue-400 transition-colors duration-200 hover:text-blue-300"
                @click.prevent="mode = mode === 'signin' ? 'signup' : 'signin'">
               {{ mode === 'signin' ? 'Sign up' : 'Sign in' }}
             </a>
@@ -36,10 +36,10 @@
         </div>
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div class="bg-gray-800 border border-gray-700 py-8 px-6 rounded-2xl sm:px-10">
+          <div class="px-6 py-8 bg-gray-800 border border-gray-700 rounded-2xl sm:px-10">
             <!-- Error message -->
-            <div v-if="errorMsg" class="mb-5 p-3 bg-red-900 bg-opacity-40 border border-red-700 border-opacity-50 rounded-lg text-red-400 text-sm flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div v-if="errorMsg" class="flex items-center gap-2 p-3 mb-5 text-sm text-red-400 bg-red-900 border border-red-700 border-opacity-50 rounded-lg bg-opacity-40">
+              <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               {{ errorMsg }}
             </div>
             
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Right side: App Info -->
-      <div class="hidden lg:flex lg:w-1/2 h-full relative overflow-hidden" style="background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 40%, #1e40af 100%);">
+      <div class="relative hidden h-full overflow-hidden lg:flex lg:w-1/2" style="background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 40%, #1e40af 100%);">
 
         <!-- SVG decorative background -->
         <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -137,70 +137,70 @@
         </svg>
 
         <!-- Content -->
-        <div class="flex flex-col justify-center items-start w-full h-full p-12 z-10 relative">
+        <div class="relative z-10 flex flex-col items-start justify-center w-full h-full p-12">
           <!-- App Logo and Name -->
           <div class="flex items-center gap-3 mb-12">
-            <div class="w-10 h-10 rounded-xl bg-white bg-opacity-15 backdrop-blur-sm flex items-center justify-center border border-white border-opacity-20">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <div class="flex items-center justify-center w-10 h-10 bg-white border border-white rounded-xl bg-opacity-15 backdrop-blur-sm border-opacity-20">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
                 <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
               </svg>
             </div>
             <div>
-              <span class="text-white font-bold text-xl">Financial</span>
-              <span class="text-blue-200 font-medium text-xl">Manager</span>
+              <span class="text-xl font-bold text-white">Financial</span>
+              <span class="text-xl font-medium text-blue-200">Manager</span>
             </div>
           </div>
 
-          <h1 class="text-4xl font-bold text-white mb-4 leading-tight">Manage Your Finances<br/><span class="text-blue-200">with Ease</span></h1>
-          <p class="text-blue-200 text-sm mb-10 max-w-xs">Take control of your money. Track, plan, and grow — all in one place.</p>
+          <h1 class="mb-4 text-4xl font-bold leading-tight text-white">Manage Your Finances<br/><span class="text-blue-200">with Ease</span></h1>
+          <p class="max-w-xs mb-10 text-sm text-blue-200">Take control of your money. Track, plan, and grow — all in one place.</p>
 
           <div class="space-y-5">
             <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-lg bg-white bg-opacity-15 border border-white border-opacity-20 flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border border-white rounded-lg bg-opacity-15 border-opacity-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
               <div>
-                <h3 class="font-semibold text-white text-sm">Track Expenses</h3>
-                <p class="text-blue-200 text-xs">Monitor your daily spending and stay on top</p>
+                <h3 class="text-sm font-semibold text-white">Track Expenses</h3>
+                <p class="text-xs text-blue-200">Monitor your daily spending and stay on top</p>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-lg bg-white bg-opacity-15 border border-white border-opacity-20 flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border border-white rounded-lg bg-opacity-15 border-opacity-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                 </svg>
               </div>
               <div>
-                <h3 class="font-semibold text-white text-sm">Budget Management</h3>
-                <p class="text-blue-200 text-xs">Set limits and reach your financial goals</p>
+                <h3 class="text-sm font-semibold text-white">Budget Management</h3>
+                <p class="text-xs text-blue-200">Set limits and reach your financial goals</p>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-lg bg-white bg-opacity-15 border border-white border-opacity-20 flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border border-white rounded-lg bg-opacity-15 border-opacity-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div>
-                <h3 class="font-semibold text-white text-sm">Visual Analytics</h3>
-                <p class="text-blue-200 text-xs">Insights with detailed charts and statistics</p>
+                <h3 class="text-sm font-semibold text-white">Visual Analytics</h3>
+                <p class="text-xs text-blue-200">Insights with detailed charts and statistics</p>
               </div>
             </div>
           </div>
 
           <!-- Bottom stat pills -->
           <div class="flex gap-3 mt-12">
-            <div class="px-4 py-2 rounded-full bg-white bg-opacity-10 border border-white border-opacity-15 text-white text-xs font-medium backdrop-blur-sm">
+            <div class="px-4 py-2 text-xs font-medium text-white bg-white border border-white rounded-full bg-opacity-10 border-opacity-15 backdrop-blur-sm">
               💳 Expense tracking
             </div>
-            <div class="px-4 py-2 rounded-full bg-white bg-opacity-10 border border-white border-opacity-15 text-white text-xs font-medium backdrop-blur-sm">
+            <div class="px-4 py-2 text-xs font-medium text-white bg-white border border-white rounded-full bg-opacity-10 border-opacity-15 backdrop-blur-sm">
               📊 Live stats
             </div>
-            <div class="px-4 py-2 rounded-full bg-white bg-opacity-10 border border-white border-opacity-15 text-white text-xs font-medium backdrop-blur-sm">
+            <div class="px-4 py-2 text-xs font-medium text-white bg-white border border-white rounded-full bg-opacity-10 border-opacity-15 backdrop-blur-sm">
               🔒 Secure
             </div>
           </div>
@@ -245,12 +245,8 @@ const handleSignIn = async (email: string, password: string, rememberMe: boolean
     loading.value = true;
     errorMsg.value = '';
     
-    // Set session expiration based on rememberMe
-    const sessionOptions = rememberMe 
-      ? { expiresIn: 30 * 24 * 60 * 60 } // 30 days if rememberMe is true
-      : { expiresIn: 1 * 24 * 60 * 60 }  // 1 day if rememberMe is false
-    
-    const result = await userStore.signIn(email, password, sessionOptions);
+    localStorage.setItem('rememberMe', rememberMe ? 'true' : 'false');
+    const result = await userStore.signIn(email, password);
 
     if (!result.success) {
       throw new Error(result.error);

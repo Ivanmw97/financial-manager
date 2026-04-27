@@ -80,14 +80,13 @@ export const useUserStore = defineStore('user', {
       console.log('Guest mode set to:', value);
     },
     
-    async signIn(email: string, password: string, sessionOptions = {}) {
+    async signIn(email: string, password: string) {
       this.isLoading = true;
       
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
-          password,
-          options: sessionOptions
+          password
         });
         
         if (error) throw error;
