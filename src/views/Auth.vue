@@ -59,7 +59,7 @@
               :loading="loading"
               @sign-up="handleSignUp"
               @show-terms="showTermsModal = true"
-              @show-privacy="showPrivacyModal = false"
+              @show-privacy="showPrivacyModal = true"
             />
           </div>
         </div>
