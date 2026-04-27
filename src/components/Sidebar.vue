@@ -1,12 +1,10 @@
 <template>
-  <!-- Mobile Menu Button -->
-  <button 
-    class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-    @click="toggleSidebar"
-  >
-    <Menu v-if="!isOpen" class="h-6 w-6" />
-    <X v-else class="h-6 w-6" />
-  </button>
+  <!-- Backdrop for mobile -->
+  <div
+    v-if="isOpen"
+    class="lg:hidden fixed inset-0 z-30 bg-black bg-opacity-50"
+    @click="$emit('close')"
+  ></div>
 
   <!-- Sidebar -->
   <div :class="[
@@ -63,20 +61,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { provide } from 'vue';
 import SidebarItem from '../components/SidebarItem.vue';
-import { Menu, X, LayoutDashboard, Wallet, BarChart, ReceiptEuro } from 'lucide-vue-next';
+import { LayoutDashboard, Wallet, BarChart, ReceiptEuro } from 'lucide-vue-next';
 import UserProfile from './UserProfile.vue';
 
-const isOpen = ref(false);
+const props = defineProps<{ isOpen: boolean }>();
+const emit = defineEmits<{ (e: 'close'): void }>();
 
-const toggleSidebar = () => {
-  isOpen.value = !isOpen.value;
-};
-
-// Provide the close function to child components
-provide('closeSidebar', () => {
-  isOpen.value = false;
-});
+provide('closeSidebar', () => emit('close'));
 </script>
   

@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 lg:mb-8 gap-4">
       <div>
-        <h1 class="text-xl lg:text-2xl font-bold">Budgets</h1>
+        <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Budgets</h1>
         <p class="text-sm text-gray-500">Monthly spending limits for {{ formattedMonth }}</p>
       </div>
       <button 

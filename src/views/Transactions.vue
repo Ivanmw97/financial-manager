@@ -3,7 +3,7 @@
     <!-- Header and Filters -->
     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 lg:mb-8 gap-4">
       <div>
-        <h1 class="text-xl lg:text-2xl font-bold">Transactions</h1>
+        <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Transactions</h1>
         <p class="text-sm text-gray-500">Manage your income and expenses</p>
       </div>
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">

@@ -2,7 +2,7 @@
   <div class="p-4 lg:p-6">
     <!-- Header -->
     <div class="mb-6 lg:mb-8">
-      <h1 class="text-xl lg:text-2xl font-bold">Dashboard</h1>
+      <h1 class="hidden lg:block text-2xl font-bold">Dashboard</h1>
       <p class="text-xs lg:text-sm text-gray-500">Real-time overview of your financial activity</p>
       <p class="text-xs text-blue-600 mt-2">All budget and spending data resets at the beginning of each month</p>
     </div>

@@ -2,7 +2,7 @@
   <div class="p-4 lg:p-6">
     <!-- Header -->
     <div class="mb-6 lg:mb-8">
-      <h1 class="text-xl lg:text-2xl font-bold">Statistics</h1>
+      <h1 class="hidden lg:block text-xl lg:text-2xl font-bold">Statistics</h1>
       <p class="text-sm text-gray-500">Financial insights and analysis</p>
     </div>
 
