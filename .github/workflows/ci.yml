@@ -1,13 +1,14 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
-    branches: [ develop, release ]
+    branches: [ develop ]
   pull_request:
     branches: [ release ]
 
 jobs:
-  validate:
+  type-check-and-lint:
+    name: Type Check & Lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -24,7 +25,8 @@ jobs:
       run: npx eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts
 
   test:
-    needs: validate
+    name: Unit Tests
+    needs: type-check-and-lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -37,28 +39,5 @@ jobs:
       run: npm ci
     - name: Run tests with coverage
       run: npm run test:coverage
-    - name: Upload coverage reports
+    - name: Upload coverage report
       uses: codecov/codecov-action@v4
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '24'
-        cache: 'npm'
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-      env:
-        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: dist
