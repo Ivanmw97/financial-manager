@@ -1,5 +1,7 @@
 # 💸 Financial Manager
 
+> **v1.4.0**
+
 A modern web application to track your personal finances, monitor spending, and stay on top of your budget.  
 Built with Vue 3, TypeScript, and Vite for speed, simplicity, and scalability.
 
@@ -14,7 +16,10 @@ GitHub Pages: https://ivanmw97.github.io/financial-manager
 - Budget management with goals and limits
 - Monthly tracking with categorized summaries
 - Visual charts and statistics
-- Supabase integration (for auth & data storage)
+- User profile management (name, currency, avatar, password)
+- Multi-currency support — currency updates reflect across the whole app
+- Mobile-responsive layout with animated sidebar
+- Supabase integration (auth, profiles & data storage)
 
 ---
 
